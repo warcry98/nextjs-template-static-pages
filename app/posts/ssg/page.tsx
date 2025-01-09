@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 const POSTS_PER_PAGE = 9
 
-export const generateStatisParams = async() => {
+export const generateStaticParams = async() => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/posts`, {
         method: "POST",
         next: { tags: [ 'posts '],
