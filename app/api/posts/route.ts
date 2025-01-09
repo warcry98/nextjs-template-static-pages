@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
+import fs from "fs"
+import path from "path";
 
 interface Post {
     id: number;
@@ -7,12 +9,7 @@ interface Post {
     description: string;
 };
 
-const posts: Post[] = Array.from({ length: 100 }, (_, index) => ({
-    id: index + 1,
-    title: `Post Title ${index + 1}`,
-    content: `This is the content of post ${index + 1}`,
-    description: `This is the description for post ${index + 1}.`,
-}));
+const posts: Post[] = JSON.parse(fs.readFileSync(path.join(process.cwd(), "public", "data.json"), "utf8"));
 
 export const GET = (req: NextRequest) => {
     const searchParams = req.nextUrl.searchParams
@@ -30,7 +27,6 @@ export const POST = async (req: Request) => {
     const page = formData.get('page')
     const limit = formData.get('limit')
     // const { page = 1, limit = 10 } = req.query;
-
     if (page && limit) {
         const start = (Number(page) - 1) * Number(limit);
         const end = start + Number(limit);
