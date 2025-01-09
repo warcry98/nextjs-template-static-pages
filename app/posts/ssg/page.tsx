@@ -16,7 +16,7 @@ const POSTS_PER_PAGE = 9
 
 export const generateStaticParams = async() => {
     const body = new FormData()
-    const res = await fetch(`/api/posts`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/posts`, {
         method: "POST",
         body,
         // next: { tags: [ 'posts '],
@@ -35,11 +35,12 @@ export const generateStaticParams = async() => {
 export default async function PostsSSGPage(props: { searchParams: Promise<{ page? : string }>}) {
     const searchParams = (await props.searchParams);
     const currentPage = parseInt(searchParams.page || '1', 10);
+    console.log(currentPage)
     const body = new FormData()
     body.set("page", String(currentPage))
     body.set("limit", String(POSTS_PER_PAGE))
     const res = await fetch(
-        `/api/posts`, {
+        `${process.env.NEXT_PUBLIC_API_URL}/api/posts`, {
             method: "POST",
             body, 
             // next: {
@@ -50,6 +51,7 @@ export default async function PostsSSGPage(props: { searchParams: Promise<{ page
     )
 
     const posts: Post[] = await res.json();
+    console.log(posts)
 
     const nextPage = currentPage + 1;
     const hasMore = posts.length === POSTS_PER_PAGE;
