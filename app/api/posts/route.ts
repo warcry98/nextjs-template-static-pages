@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 
+export const dynamic = "force-static"
+
 interface Post {
     id: number;
     title: string;
@@ -25,10 +27,10 @@ export const GET = (req: NextRequest) => {
     // res.status(200).json(posts.slice(start, end));
 }
 
-export const POST = async (req: Request) => {
-    const formData = await req.formData()
-    const page = formData.get('page')
-    const limit = formData.get('limit')
+export const POST = (req: Request) => {
+    const formData = req.formData()
+    const page = formData.then((data) => data.get('page'))
+    const limit = formData.then((data) => data.get('limit'))
     // const { page = 1, limit = 10 } = req.query;
 
     if (page && limit) {
