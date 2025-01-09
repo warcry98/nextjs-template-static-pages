@@ -26,8 +26,8 @@ export async function generateMetadata() {
     };
 }
 
-export default async function Page(props: { searchParams: Promise<{ page?: string }> }) {
-    const searchParams = await props.searchParams;
+export default async function Page(props: { searchParams: { page?: string } }) {
+    const searchParams = props.searchParams;
     const currentPage = parseInt(searchParams.page || '1', 10);
 
     const body = new FormData()
