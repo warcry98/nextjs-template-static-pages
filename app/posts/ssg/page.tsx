@@ -32,8 +32,8 @@ export const generateStaticParams = async() => {
     }));
 }
 
-export default async function PostsSSGPage(props: { searchParams: { page? : string }}) {
-    const searchParams = props.searchParams;
+export default async function PostsSSGPage(props: { searchParams: Promise<{ page? : string }>}) {
+    const searchParams = (await props.searchParams);
     const currentPage = parseInt(searchParams.page || '1', 10);
     const body = new FormData()
     body.set("page", String(currentPage))
