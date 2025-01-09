@@ -15,11 +15,13 @@ export const metadata: Metadata = {
 const POSTS_PER_PAGE = 9
 
 export const generateStaticParams = async() => {
+    const body = new FormData()
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/posts`, {
         method: "POST",
-        next: { tags: [ 'posts '],
-            revalidate: 60,
-        }
+        body,
+        // next: { tags: [ 'posts '],
+        //     revalidate: 60,
+        // }
     })
 
     const posts: Post[] = await res.json();
@@ -40,10 +42,10 @@ export default async function PostsSSGPage(props: { searchParams: Promise<{ page
         `${process.env.NEXT_PUBLIC_API_URL}/api/posts`, {
             method: "POST",
             body, 
-            next: {
-                tags: [ 'posts'],
-                revalidate: 60,
-            }
+            // next: {
+            //     tags: [ 'posts'],
+            //     revalidate: 60,
+            // }
         }
     )
 
