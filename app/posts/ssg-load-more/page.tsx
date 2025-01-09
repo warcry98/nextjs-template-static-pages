@@ -35,7 +35,7 @@ export default async function Page(props: { searchParams: Promise<{ page?: strin
     body.set("limit", POSTS_PER_PAGE.toString())
 
     const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/posts`, {
+        `/api/posts`, {
             method: "POST",
             body,
         }
@@ -43,7 +43,7 @@ export default async function Page(props: { searchParams: Promise<{ page?: strin
     const initialPosts: Post[] = await res.json();
 
     const form = new FormData()
-    const totalPostsRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/posts`, {
+    const totalPostsRes = await fetch(`/api/posts`, {
         method: "POST",
         body: form,
     });
